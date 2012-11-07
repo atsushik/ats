@@ -14,6 +14,14 @@ sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 def main():
     print u"テスト開始"
     testGesdOutlierTest()
+    testCorrcoef()
+
+def testCorrcoef():
+    valList1 = [10 , 11 , 12 , 13 , 14 , 15 , 14 , 13 , 12 , 11 , 10 , 11]
+    valList2 = [10 , 11 , 12 , 13 , 14 , 15 , 14 , 13 , 12 , 11 , 10 , 11]
+    myFunc = atsFunc()
+    corrcoefVal = myFunc.corrcoef(valList1 , valList2)
+    print u"相関係数の値\t: " , corrcoefVal
 
 def testGesdOutlierTest():
     valueList = [-0.25, 0.68, 0.94, 1.15, 1.20, 1.26, 1.26, \

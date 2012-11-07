@@ -3,11 +3,33 @@
 
 import copy
 import sys
+import numpy
 from scipy import stats
 from math  import sqrt
 #import numpy
 
 class atsFunc:
+
+    #
+    # 与えられた２つの数値のリストの相関係数を返す
+    #from numpy import corrcoef
+    def corrcoef(self , valList1 , valList2):
+        print "valList1\t: " , valList1
+        if self.nanstd(valList1) == 0:
+            return Nan
+        print "valList2\t: " , valList2
+        if self.nanstd(valList2) == 0:
+            return Nan
+        print numpy.corrcoef(valList1 , valList2)
+        return numpy.corrcoef(valList1 , valList2)[0][1]
+    #
+    # 与えられた数値のリストの平均値を返す
+    def average(self , valList):
+        return sum(valList) / float(len(valList))
+    #
+    # 与えられた数値のリストの不変分散を返す
+    def nanstd(self , valList):
+        return sqrt(sum((x - self.average(valList))**2 for x in valList) / float(len(valList) - 1))
     #
     # Generalized ESD Test for Outliers
     # http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
