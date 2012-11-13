@@ -3,10 +3,8 @@
 
 import copy
 import sys
-import numpy
 from scipy import stats
 from math  import sqrt
-#import numpy
 
 class atsFunc:
 
@@ -14,18 +12,41 @@ class atsFunc:
     # 与えられた２つの数値のリストの相関係数を返す
     #from numpy import corrcoef
     def corrcoef(self , valList1 , valList2):
-        print "valList1\t: " , valList1
         if self.nanstd(valList1) == 0:
-            return Nan
-        print "valList2\t: " , valList2
+            sys.stderr.write(u"valList1の不変分散が0")
+            return None
         if self.nanstd(valList2) == 0:
-            return Nan
-        print numpy.corrcoef(valList1 , valList2)
-        return numpy.corrcoef(valList1 , valList2)[0][1]
+            sys.stderr.write(u"valList2の不変分散が0")
+            return None
+        #
+        stddev1 = self.stdDev(valList1)
+        stddev2 = self.stdDev(valList2)
+        cov     = self.covariance(valList1, valList2)
+        corrVal = cov/(stddev1 * stddev2)
+        return corrVal
     #
     # 与えられた数値のリストの平均値を返す
     def average(self , valList):
         return sum(valList) / float(len(valList))
+    #
+    # 与えられた数値のリストの共分散を返す
+    def covariance(self , valList1 , valList2):
+        if not len(valList1) == len(valList2):
+            return None
+        avg1 = self.average(valList1)
+        avg2 = self.average(valList2)
+        sum  = 0
+        for idx in range(0 , len(valList1)):
+            sum += (valList1[idx] - avg1)*(valList2[idx] - avg2)
+        return (sum/len(valList1))
+    #
+    # 与えられた数値のリストの分散を返す
+    def variance(self , valList):
+        return sum((x - self.average(valList))**2 for x in valList) / float(len(valList))
+    #
+    # 与えられた数値のリストの標準偏差を返す
+    def stdDev(self , valList):
+        return sqrt(self.variance(valList))
     #
     # 与えられた数値のリストの不変分散を返す
     def nanstd(self , valList):

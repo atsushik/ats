@@ -16,11 +16,26 @@ def main():
     testGesdOutlierTest()
     testCorrcoef()
 
+import numpy
+import random
 def testCorrcoef():
+    myFunc = atsFunc()
+    for testCount in range(0,10):
+        valList1 = []
+        valList2 = []
+        random.seed(testCount)
+        for idx in range(0,10):
+            valList1.append(random.random())
+            valList2.append(random.random())
+        print valList1 
+        print valList2
+        corrcoefVal = myFunc.corrcoef(valList1 , valList2)
+        print u"相関係数の値(numpy)  \t: " , numpy.corrcoef(valList1 , valList2)[0][1]
+        print u"相関係数の値(atsFunc)\t: " , corrcoefVal
     valList1 = [10 , 11 , 12 , 13 , 14 , 15 , 14 , 13 , 12 , 11 , 10 , 11]
     valList2 = [10 , 11 , 12 , 13 , 14 , 15 , 14 , 13 , 12 , 11 , 10 , 11]
-    myFunc = atsFunc()
     corrcoefVal = myFunc.corrcoef(valList1 , valList2)
+    print numpy.corrcoef(valList1 , valList2)
     print u"相関係数の値\t: " , corrcoefVal
 
 def testGesdOutlierTest():
