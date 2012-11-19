@@ -15,6 +15,24 @@ def main():
     print u"テスト開始"
     testGesdOutlierTest()
     testCorrcoef()
+    testRootMeanSquareError()
+
+
+def testRootMeanSquareError():
+    myFunc = atsFunc()
+    valList1 = []
+    valList2 = []
+    valList3 = []
+    for val in range(0,10):
+        valList1.append(val    )
+        valList2.append(val + 1)
+        valList3.append(val + 2)
+    print valList1
+    print myFunc.rootMeanSquareError(valList2, valList1, [1,1,0])
+    print valList2
+    print myFunc.rootMeanSquareError(valList2, valList2, [1,1,0])
+    print valList3
+    print myFunc.rootMeanSquareError(valList2, valList3, [1,1,0])
 
 import numpy
 import random

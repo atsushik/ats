@@ -9,6 +9,18 @@ from math  import sqrt
 class atsFunc:
 
     #
+    # xy値のリストと、モデルの式(次数,a,b,…)を受取り、平均2乗誤差を返す
+    def rootMeanSquareError(self , xList , yList , modelFormula):
+        sum = 0.0
+        for pos in range(0, len(xList)):
+            modelValue = 0
+            for idx in range(0, modelFormula[0]):
+                order = modelFormula[0] - idx
+                modelValue += (modelFormula[idx + 1] * pow(xList[pos], order))
+            diff = float(yList[pos] - modelValue)
+            sum += diff**2
+        return sqrt(sum/len(xList))
+    #
     # 与えられた２つの数値のリストの相関係数を返す
     #from numpy import corrcoef
     def corrcoef(self , valList1 , valList2):
