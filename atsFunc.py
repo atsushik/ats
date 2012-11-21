@@ -9,6 +9,28 @@ from math  import sqrt
 class atsFunc:
 
     #
+    # 与えられた数値リストを正規化したリストを返す
+    def normalizeList(self , valList):
+        maxVal = max(valList)
+        retList = []
+        if maxVal == 0:
+            return valList
+        for val in valList:
+            retList.append(float(val)/maxVal)
+        return retList
+    #
+    # 与えられた2つの数値リストから、コサイン類似度を計算して返す
+    def cosSimilarity(self , valList1 , valList2):
+        sum = 0
+        sum1 = sum2 = 0
+        for idx in range(0, len(valList1)):
+            sum  += (valList1[idx] * valList2[idx])
+            sum1 += (valList1[idx] * valList1[idx])
+            sum2 += (valList2[idx] * valList2[idx])
+        if sum1 == 0 or sum2 == 0:
+            return None
+        return (sum/(sqrt(sum1) * sqrt(sum2)))
+    #
     # xy値のリストと、モデルの式(次数,a,b,…)を受取り、平均2乗誤差を返す
     def rootMeanSquareError(self , xList , yList , modelFormula):
         sum = 0.0
