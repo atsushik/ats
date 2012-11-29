@@ -12,7 +12,7 @@ def syslogTempture():
     tempture = getTempture()
     #syslog.openlog(logopt=syslog.LOG_PID|syslog.LOG_PERROR)
     syslog.openlog()
-    syslog.syslog('Current tempture : ' + tempture)
+    syslog.syslog('Current tempture : ' + tempture + " Celcius")
     syslog.closelog()
 
 import serial
