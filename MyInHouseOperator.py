@@ -32,7 +32,7 @@ def getTempture():
     msg = ser.readline()
     msg = ser.readline().strip()
     ser.close()
-    print msg.split("\t")
-    return msg
+    print msg.split(" ")
+    return msg.split(" ")[0]
 
 main()
