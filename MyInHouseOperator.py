@@ -28,7 +28,8 @@ def getTempture():
                           #    interCharTimeout = None
                       )
     ser.open()
-    ser.writeline("temp")
+    ser.write("temp")
+    print ser.readline()
     print ser.readline()
     ser.close()
 
