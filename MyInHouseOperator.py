@@ -29,10 +29,10 @@ def getTempture():
                       )
     ser.open()
     ser.write("temp")
-    msg = ser.readline()
+    msg = ""
     msg.replace("\t" , "")
-    while not msg.endswith("Cel"):
-        msg = ser.readline()
+    while ser.inWaiting() > 0:
+        msg += ser.readline()
     ser.close()
     return msg
 
