@@ -9,10 +9,10 @@ def main():
 
 import syslog
 def syslogTempture():
-    temptureTSV = getTempture()
+    temptureVal = getTempture()
     #syslog.openlog(logopt=syslog.LOG_PID|syslog.LOG_PERROR)
     syslog.openlog()
-    syslog.syslog('Current tempture :\t' + temptureTSV)
+    syslog.syslog('Current tempture :\t' + temptureVal + "\tCelsius")
     syslog.closelog()
 
 import serial
@@ -29,10 +29,10 @@ def getTempture():
                       )
     ser.open()
     ser.write("temp")
-    msg = ser.readline()
-    while not msg.endswith("Celsius"):
+    msgList = ser.readline().split("\t")
+    while not msgList[1].beginswith("Cel"):
         msg = ser.readline()
     ser.close()
-    return msg
+    return msgList[0]
 
 main()
