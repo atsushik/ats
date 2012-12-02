@@ -6,17 +6,25 @@ ttyname = "ttyACM0"
 
 def main():
     syslogTempture()
+    syslogBrightness()
 
 import syslog
 def syslogTempture():
-    tempture = getTempture()
+    temperature = getSensorData("temperature")
     #syslog.openlog(logopt=syslog.LOG_PID|syslog.LOG_PERROR)
     syslog.openlog()
-    syslog.syslog('Current tempture : ' + tempture + " Celcius")
+    syslog.syslog('Current temperature : ' + temperature + " Celcius")
+    syslog.closelog()
+
+def syslogBrightness():
+    brightness = getSensorData("brightness")
+    #syslog.openlog(logopt=syslog.LOG_PID|syslog.LOG_PERROR)
+    syslog.openlog()
+    syslog.syslog('Current brightness : ' + brightness + " lx")
     syslog.closelog()
 
 import serial
-def getTempture():
+def getSensorData(sensorType):
     ser=serial.Serial(port = '/dev/' + ttyname,\
                           baudrate = 9600,\
                           parity = serial.PARITY_NONE,\
@@ -28,11 +36,13 @@ def getTempture():
                           #    interCharTimeout = None
                       )
     ser.open()
-    ser.write("temp")
+    ser.write(sensorType)
     msg = ser.readline()
-    msg = ser.readline().strip()
+    while not msg.startswith(sensorType):
+        msg = ser.readline()
     ser.close()
-    print msg.split(" ")
-    return msg.split(" ")[0]
+    msg = msg.strip()
+    #print msg.split(" ")
+    return msg.split(" ")[1]
 
 main()
